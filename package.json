@@ -1,0 +1,16 @@
+{
+  "name": "cookit_microservices",
+  "version": "1.0.0",
+  "description": "cookit using microservices",
+  "keywords": [
+    "cookir",
+    "seneca",
+    "micro-service"
+  ],
+  "author": "Katrin Feyrer",
+  "license": "",
+  "dependencies": {
+    "express": "^4.13.3",
+    "seneca": "^0.7.2"
+  }
+}
