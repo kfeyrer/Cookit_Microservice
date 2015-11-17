@@ -5,10 +5,11 @@ require( 'seneca' )()
 
     // send any role:math patterns out over the network
     // IMPORTANT: must match listening service
-    .client( { type:'tcp', pin:'role:search', port: '4000' } )
+    .client( { type:'tcp', pin:'role:recipes', port:'4001' } )
 
     // executed remotely
-    .act( 'role:search,cmd:search,query:test', console.log )
+    .act( 'role:recipes,cmd:list', console.log )
+    .act( 'role:recipes,cmd:detail,recipe:1', console.log)
 
     // executed locally
     .act('say:hello',console.log)

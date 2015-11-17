@@ -10,7 +10,9 @@ seneca.use('mysql-store', { name:'cookit',
     password:'M22092013k',
     port:9249})
     .use( 'api' )
-    .client( { type:'tcp', pin:'role:search' } );
+    .client( { type:'tcp', pin:'role:search', port: '4000' } )
+    .client( { type:'tcp', pin: 'role:recipes', port: '4001' })
+    //.client( { type:'tcp', pin: 'role:recipes, cmd:detail', port: '4001' });
 
 seneca.ready(function () {
     //get table

@@ -12,7 +12,8 @@ module.exports = function search( options ) {
             var recipes = seneca.make$('recipes');
             recipes.list$({}, function (err, entities) {
                 if (err) {
-                    console.log(err);
+                    console.error('SEARCH: ' + err);
+                    respond(null, {error: err, http$: {status:404}});
                 }
                 else {
                     respond(null, {
@@ -31,6 +32,7 @@ module.exports = function search( options ) {
                 }
             });
         } else {
+            console.error('SEARCH: Wrong Parameter');
             respond(null, {error: 'Wrong parameter', http$: {status:404}});
         }
     }

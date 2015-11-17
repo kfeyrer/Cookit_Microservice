@@ -1,10 +1,17 @@
 module.exports = function api( options ) {
-    var valid_ops = { search:'search'};
+    var valid_ops = { search:'search', list: 'list', detail: 'detail'};
 
     this.add( 'role:api,path:search', function( msg, respond ) {
         this.act( 'role:search', {
-            cmd:   valid_ops[msg.operation],
+            cmd:   'search',
             query: msg.query
+        }, respond )
+    });
+
+    this.add( 'role:api,path:recipes', function( msg, respond ) {
+        this.act( 'role:recipes', {
+            cmd:   valid_ops[msg.operation],
+            recipe: msg.recipe || null
         }, respond )
     });
 
@@ -22,6 +29,9 @@ module.exports = function api( options ) {
             pin:    'role:api,path:*',
             map: {
                 search: {
+                    GET:true
+                },
+                recipes: {
                     GET:true,
                     suffix:'/:operation'
                 }
