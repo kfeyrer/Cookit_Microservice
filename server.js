@@ -1,10 +1,16 @@
 var express    = require("express"),
-    mysql      = require('mysql'),
     seneca = require('seneca')(),
     dbConfig = require('./db_conf'),
+    _ = require('lodash'),
     app = express();
 
-seneca.use('mysql-store', dbConfig);
+seneca.use('mysql-store', { name:'cookit',
+    host:'localhost',
+    user:'root',
+    password:'M22092013k',
+    port:9249})
+    .use( 'api' )
+    .client( { type:'tcp', pin:'role:search' } );
 
 seneca.ready(function () {
     //get table
@@ -13,24 +19,29 @@ seneca.ready(function () {
     recipes.ingredients = '1 Ei';
     recipes.description = 'blabla';
     //add entry
-    recipes.save$(function (err, apple) {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log("apple.id = " + apple.id)
-        }
-    });
+    //recipes.save$(function (err, apple) {
+    //    if(err) {
+    //        console.log(err);
+    //    } else {
+    //        console.log("apple.id = " + apple.id)
+    //    }
+    //});
 
     //list entries
-    recipes.list$({}, function(err, entity) {
+    recipes.list$({}, function(err, entities) {
         if (err) {
             console.log(err);
         }
         else {
-            console.log(entity);
+            console.log(_.filter(entities, function(entity) {
+                entity = entity.data$();
+                return entity.name.toLowerCase().indexOf('test'.toLowerCase()) !== -1;
+            }));
         }
     });
 
 });
 
-app.listen(8001);
+app.use( require('body-parser').json())
+    .use( seneca.export( 'web' ) )
+    .listen(3000);
