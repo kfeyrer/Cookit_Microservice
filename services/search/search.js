@@ -25,7 +25,7 @@ module.exports = function search( options ) {
                                 description: entity.description
                             };
                         }).filter(function (entity) {
-                            return entity.name.toLowerCase().indexOf(msg.query.toLowerCase()) !== -1;
+                            return entity.name.toLowerCase().indexOf(escape(msg.query.toLowerCase())) !== -1;
                         }),
                         http$: {status: 200}});
                 }
