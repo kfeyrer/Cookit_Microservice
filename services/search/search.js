@@ -1,6 +1,7 @@
 var seneca = require('seneca')(),
-    dbConfig = require('../../db_conf'),
-    _ = require('lodash');
+    dbConfig = require('../../conf/db_recipe'),
+    _ = require('lodash'),
+    convertRecipe = require('../../utils/convertRecipe');
 
 seneca.use('mysql-store', dbConfig);
 module.exports = function search( options ) {
@@ -17,15 +18,7 @@ module.exports = function search( options ) {
                 }
                 else {
                     respond(null, {
-                        data: _.map(entities, function (entity) {
-                            entity = entity.data$();
-                            return {
-                                id: entity.id,
-                                name: entity.name,
-                                ingredients: entity.ingredients,
-                                description: entity.description
-                            };
-                        }).filter(function (entity) {
+                        data: convertRecipe(entities).filter(function (entity) {
                             return entity.name.toLowerCase().indexOf(escape(msg.query.toLowerCase())) !== -1;
                         }),
                         http$: {status: 200}});

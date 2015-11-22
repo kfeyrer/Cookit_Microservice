@@ -1,6 +1,6 @@
 var express    = require("express"),
     seneca = require('seneca')(),
-    dbConfig = require('./db_conf'),
+    dbConfig = require('./conf/db_recipe'),
     _ = require('lodash'),
     app = express();
 
@@ -12,7 +12,7 @@ seneca.use('mysql-store', { name:'cookit',
     .use( 'api' )
     .client( { type:'tcp', pin:'role:search', port: '4000' } )
     .client( { type:'tcp', pin: 'role:recipes', port: '4001' })
-    //.client( { type:'tcp', pin: 'role:recipes, cmd:detail', port: '4001' });
+    .client( { type:'tcp', pin: 'role:auth', port: '4002' });
 
 seneca.ready(function () {
     //get table

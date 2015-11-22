@@ -1,5 +1,5 @@
 var seneca = require('seneca')(),
-    dbConfig = require('../../db_conf'),
+    dbConfig = require('../../conf/db_recipe'),
     _ = require('lodash'),
     convertRecipe = require('../../utils/convertRecipe');
 
@@ -35,7 +35,13 @@ module.exports = function recipes( options ) {
                 else {
                     respond(null, {
                         data: _.first(convertRecipe(entities)),
-                        http$: {status: 200}});
+                        http$: {
+                            status: 200
+                            //for setting the cookie on login
+                            //headers: {
+                            //    'Set-Cookie': 'bla=1234;path=/'
+                            //}
+                        }});
                 }
             });
         } else {

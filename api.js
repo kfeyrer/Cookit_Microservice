@@ -1,5 +1,5 @@
 module.exports = function api( options ) {
-    var valid_ops = { search:'search', list: 'list', detail: 'detail'};
+    var valid_ops = { search:'search', list: 'list', detail: 'detail', login: 'login'};
 
     this.add( 'role:api,path:search', function( msg, respond ) {
         this.act( 'role:search', {
@@ -12,6 +12,13 @@ module.exports = function api( options ) {
         this.act( 'role:recipes', {
             cmd:   valid_ops[msg.operation],
             recipe: msg.recipe || null
+        }, respond )
+    });
+    this.add( 'role:api,path:auth', function( msg, respond ) {
+        console.log(msg.req$.body);
+        this.act( 'role:auth', {
+            cmd:   valid_ops[msg.operation],
+            body: msg.req$.body
         }, respond )
     });
 
@@ -33,6 +40,10 @@ module.exports = function api( options ) {
                 },
                 recipes: {
                     GET:true,
+                    suffix:'/:operation'
+                },
+                auth: {
+                    POST:true,
                     suffix:'/:operation'
                 }
             }
