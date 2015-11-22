@@ -1,70 +1,93 @@
 var seneca = require('seneca')(),
-    dbConfig = require('../../conf/db_user'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    expirationDate = require('../../utils/expirationDate');
 
-seneca.use('mysql-store', dbConfig);
-module.exports = function search( options ) {
+seneca.use('user');
+seneca.client({role:'user',cmd:'*'});
+module.exports = function auth( options ) {
 
     this.add( 'role:auth,cmd:login', login);
+    this.add( 'role:auth, cmd:add', add);
+    this.add( 'role:auth, cmd:logout', logout);
+
 
     function login(msg, respond) {
         if (_.has(msg.body, 'username') && _.has(msg.body, 'password')) {
-            var user = seneca.make$('user');
-            user.list$({}, function (err, entities) {
-                if (err) {
-                    console.error('LOGIN: ' + err);
-                    respond(null, {error: err, http$: {status: 404}});
-                }
-                else {
-                    console.log(entities);
-                    respond(null, getUser(entities, msg.body));
-                }
-            });
+            getUser(msg.body, respond);
         } else {
             console.error('LOGIN: No User found');
             respond(null, {error: 'No User found', http$: {status:404}});
         }
     }
 
-    function getUser(entities, userData) {
-        var user = _.filter(entities, function(entity) {
-            entity = entity.data$();
-            return entity.email === userData.username && entity.password === userData.password;
-        });
+    //function logout(msg, respond) {
+    //    seneca.act( 'role:user', {
+    //        cmd: 'login',
+    //        email: userData.username,
+    //        password: userData.password
+    //    }
+    //}
 
-        if (user.length > 0) {
-            return {
-                data: {success: true},
-                http$: {
-                    status: 200,
-                    headers: {
-                        'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
+    function getUser(userData, respond) {
+        var data = {};
+
+        //send correct cookie token
+        seneca.act( 'role:user', {
+            cmd: 'login',
+            email: userData.username,
+            password: userData.password
+        }, function(err, data) {
+            console.log(data);
+            if (!data.ok || err) {
+                respond(null, {
+                    data: {success: false},
+                    http$: {
+                        status: 404,
+                        headers: {
+                            'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(true)
+                        }
                     }
-                }
+                });
+            } else {
+                respond(null, {
+                    data: {success: true},
+                    http$: {
+                        status: 200,
+                        headers: {
+                            'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
+                        }
+                    }
+                })
             }
-        }
-
-        return {
-            data: {success: false},
-            http$: {
-                status: 404,
-                headers: {
-                    'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(true)
-                }
-            }
-        };
+        });
     }
 
-    function expirationDate(expired) {
-        var now = new Date(),
-            time = now.getTime(),
-            expirationTime = 1000*36000;
-        if (expired) {
-            now.setTime( time - expirationTime);
+    function add(msg, respond) {
+        if (_.has(msg.body, 'username') && _.has(msg.body, 'password') && _.has(msg.body, 'passwordRepeat')) {
+            seneca.act( 'role:user', {
+                cmd:   'register',
+                email: msg.body.username,
+                password: msg.body.password,
+                repeat: msg.body.passwordRepeat
+            }, function(err, data) {
+                console.log(data);
+                if ((!data.ok) || err) {
+                    respond(null, {error: data.why || data.exists || err});
+                } else {
+                    respond(null, {
+                        data: {success: true},
+                        http$: {
+                            status: 200,
+                            headers: {
+                                'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
+                            }
+                        }
+                    });
+                }
+            });
         } else {
-            now.setTime( time + expirationTime);
+            console.error('LOGIN: No User found');
+            respond(null, {error: 'No User found', http$: {status:404}});
         }
-
-        return now.toGMTString();
     }
 };

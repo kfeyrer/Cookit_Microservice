@@ -8,7 +8,9 @@ require( 'seneca' )()
     .client( { type:'tcp', pin:'role:auth', port:'4002' } )
 
     // executed remotely
+    .act( 'role:auth,cmd:add, body:{username:"test@test.at", password: "1234", passwordRepeat: "1234"}', console.log )
     .act( 'role:auth,cmd:login, body:{username:"test@test.at", password: "1234"}', console.log )
+
 
     // executed locally
     .act('say:hello',console.log);
