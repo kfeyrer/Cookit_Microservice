@@ -7,7 +7,7 @@ seneca.client({role:'user',cmd:'*'});
 module.exports = function auth( options ) {
 
     this.add( 'role:auth,cmd:login', login);
-    this.add( 'role:auth, cmd:add', add);
+    this.add( 'role:auth, cmd:registration', add);
     this.add( 'role:auth, cmd:logout', logout);
 
 
@@ -20,13 +20,37 @@ module.exports = function auth( options ) {
         }
     }
 
-    //function logout(msg, respond) {
-    //    seneca.act( 'role:user', {
-    //        cmd: 'login',
-    //        email: userData.username,
-    //        password: userData.password
-    //    }
-    //}
+    function logout(msg, respond) {
+        console.log(msg.header.token);
+        if (msg.header.token) {
+            seneca.act('role:user', {
+                cmd: 'logout',
+                token: msg.header.token
+            }, function(err, data) {
+                console.log(data);
+                if (!data.ok || err) {
+                    respond(null, {
+                        data: {success: false},
+                        http$: {
+                            status: 404,
+                            headers: {
+                                'Set-Cookie': 'token;path=/;expires=' + expirationDate(true)
+                            }
+                        }
+                    });
+                } else {
+                    respond(null, {
+                        data: {success: true},
+                        http$: {
+                            status: 200,
+                            headers: {
+                                'Set-Cookie': 'token;path=/;expires=' + expirationDate(true)
+                            }
+                        }
+                    })
+                });
+        }
+    }
 
     function getUser(userData, respond) {
         var data = {};
@@ -44,17 +68,18 @@ module.exports = function auth( options ) {
                     http$: {
                         status: 404,
                         headers: {
-                            'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(true)
+                            'Set-Cookie': 'token;path=/;expires=' + expirationDate(true)
                         }
                     }
                 });
             } else {
+                var token = data.login.data$().id;
                 respond(null, {
                     data: {success: true},
                     http$: {
                         status: 200,
                         headers: {
-                            'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
+                            'Set-Cookie': 'token=' + token + ';path=/;expires=' + expirationDate(false)
                         }
                     }
                 })
@@ -79,7 +104,7 @@ module.exports = function auth( options ) {
                         http$: {
                             status: 200,
                             headers: {
-                                'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
+                                //'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
                             }
                         }
                     });

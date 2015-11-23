@@ -1,5 +1,5 @@
 module.exports = function api( options ) {
-    var valid_ops = { search:'search', list: 'list', detail: 'detail', login: 'login'};
+    var valid_ops = { search:'search', list: 'list', detail: 'detail', login: 'login', registration: 'registration',logout: 'logout'};
 
     this.add( 'role:api,path:search', function( msg, respond ) {
         this.act( 'role:search', {
@@ -15,9 +15,9 @@ module.exports = function api( options ) {
         }, respond )
     });
     this.add( 'role:api,path:auth', function( msg, respond ) {
-        console.log(msg.req$.body);
         this.act( 'role:auth', {
             cmd:   valid_ops[msg.operation],
+            header: msg.req$.headers,
             body: msg.req$.body
         }, respond )
     });
