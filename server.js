@@ -12,7 +12,8 @@ seneca.use('mysql-store', { name:'cookit',
     .use( 'api' )
     .client( { type:'tcp', pin:'role:search', port: '4000' } )
     .client( { type:'tcp', pin: 'role:recipes', port: '4001' })
-    .client( { type:'tcp', pin: 'role:auth', port: '4002' });
+    .client( { type:'tcp', pin: 'role:auth', port: '4002' })
+    .client( { type:'tcp', pin: 'role:addRecipes', port: '4003' });
 
 seneca.ready(function () {
     //get table

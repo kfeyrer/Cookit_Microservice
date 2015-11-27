@@ -32,7 +32,7 @@ module.exports = function auth( options ) {
                     respond(null, {
                         data: {success: false},
                         http$: {
-                            status: 404,
+                            status: 403,
                             headers: {
                                 'Set-Cookie': 'token;path=/;expires=' + expirationDate(true)
                             }
@@ -47,8 +47,19 @@ module.exports = function auth( options ) {
                                 'Set-Cookie': 'token;path=/;expires=' + expirationDate(true)
                             }
                         }
-                    })
-                });
+                    });
+                }
+            });
+        } else {
+            respond(null, {
+                data: {success: false},
+                http$: {
+                    status: 403,
+                    headers: {
+                        'Set-Cookie': 'token;path=/;expires=' + expirationDate(true)
+                    }
+                }
+            });
         }
     }
 

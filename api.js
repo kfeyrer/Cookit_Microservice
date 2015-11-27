@@ -1,5 +1,5 @@
 module.exports = function api( options ) {
-    var valid_ops = { search:'search', list: 'list', detail: 'detail', login: 'login', registration: 'registration',logout: 'logout'};
+    var valid_ops = { search:'search', list: 'list', detail: 'detail', login: 'login', registration: 'registration',logout: 'logout', add: 'add'};
 
     this.add( 'role:api,path:search', function( msg, respond ) {
         this.act( 'role:search', {
@@ -18,8 +18,15 @@ module.exports = function api( options ) {
         this.act( 'role:auth', {
             cmd:   valid_ops[msg.operation],
             header: msg.req$.headers,
-            body: msg.req$.body
+            recipe: msg.req$.body
         }, respond )
+    });
+    this.add('rolse:api,path:addRecipes', function( msg, respond) {
+        this.act( 'role:addRecipes', {
+            cmd: valid_ops[msg.operation],
+            header: msg.req$.headers,
+            body: msg.req$.body
+        })
     });
 
     this.add( 'init:api', function( msg, respond ) {
@@ -44,6 +51,10 @@ module.exports = function api( options ) {
                 },
                 auth: {
                     POST:true,
+                    suffix:'/:operation'
+                },
+                addRecipes: {
+                    PUT: true,
                     suffix:'/:operation'
                 }
             }

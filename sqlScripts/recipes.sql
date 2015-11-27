@@ -27,21 +27,22 @@ SET time_zone = "+00:00";
 --
 USE cookit;
 
+DROP TABLE IF EXISTS `recipes`;
+
 CREATE TABLE IF NOT EXISTS `recipes` (
-  `id` mediumint(9) NOT NULL,
+  `id` mediumint(9) AUTO_INCREMENT,
   `name` varchar(255) COLLATE latin1_bin NOT NULL,
   `ingredients` text COLLATE latin1_bin NOT NULL,
   `description` text COLLATE latin1_bin NOT NULL,
   `image` text COLLATE latin1_bin,
   `lat` varchar(100) COLLATE latin1_bin DEFAULT NULL,
-  `lon` varchar(100) COLLATE latin1_bin DEFAULT NULL
+  `lon` varchar(100) COLLATE latin1_bin DEFAULT NULL,
+  PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
 --
 -- Daten für Tabelle `recipes`
 --
-
-
 
 INSERT INTO `recipes` (`id`, `name`, `ingredients`, `description`, `image`, `lat`, `lon`) VALUES
 (1, 'Rezept1', '1 Ei,2g Zucker', 'Beschreibung', 'NULL', NULL, NULL),
@@ -67,8 +68,7 @@ INSERT INTO `recipes` (`id`, `name`, `ingredients`, `description`, `image`, `lat
 --
 -- Indizes für die Tabelle `recipes`
 --
-ALTER TABLE `recipes`
-  ADD PRIMARY KEY (`id`);
+
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
