@@ -1,6 +1,6 @@
 var seneca = require('seneca')(),
     _ = require('lodash'),
-    expirationDate = require('../../utils/expirationDate');
+    expirationDate = require('../utils/expirationDate');
 
 seneca.use('user');
 seneca.client({role:'user',cmd:'*'});

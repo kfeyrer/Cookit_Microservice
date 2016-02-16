@@ -10,9 +10,9 @@
   "author": "Katrin Feyrer",
   "license": "",
   "dependencies": {
-    "body-parser": "^1.14.1",
-    "express": "^4.13.3",
     "lodash": "^3.10.1",
-    "seneca": "^0.7.2"
+    "seneca": "^0.7.2",
+    "seneca-mysql-store": "^0.4.0",
+    "seneca-user": "^0.2.10"
   }
 }
