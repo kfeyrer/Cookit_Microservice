@@ -1,18 +1,33 @@
 {
-  "name": "Cookit_Microservices",
+  "repository": {
+    "name": "Cookit_Microservices",
+    "description": "cookit using microservices",
+    "keywords": [
+      "cookit",
+      "seneca",
+      "micro-service"
+    ],
+    "author": "Katrin Feyrer",
+    "license": ""
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "seneca": "^0.7.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "Cookit_Microservice",
+  "description": "Earlier project cookit transformed into microservices in nodejs",
   "version": "0.0.0",
-  "description": "cookit using microservices",
+  "main": "api.js",
+  "devDependencies": {},
   "keywords": [
     "cookit",
     "seneca",
-    "micro-service"
+    "microservices"
   ],
   "author": "Katrin Feyrer",
-  "license": "",
-  "dependencies": {
-    "body-parser": "^1.14.1",
-    "express": "^4.13.3",
-    "lodash": "^3.10.1",
-    "seneca": "^0.7.2"
-  }
+  "license": "ISC"
 }
