@@ -30,14 +30,6 @@ module.exports = function api( options ) {
     });
 
     this.add( 'init:api', function( msg, respond ) {
-        //this.act('role:web',{use:{
-        //    prefix: '/api',
-        //    pin:    'role:api,path:search',
-        //    map: {
-        //        search: { GET:true, suffix:'/:operation' }
-        //    }
-        //}})
-
         this.act('role:web',{use:{
             prefix: '/api',
             pin:    'role:api,path:*',
