@@ -1,7 +1,7 @@
 var seneca = require('seneca')(),
-    dbConfig = require('../conf/db_recipe'),
+    dbConfig = require('./conf/db_recipe'),
     _ = require('lodash'),
-    convertRecipe = require('../utils/convertRecipe');
+    convertRecipe = require('./utils/convertRecipe');
 
 seneca.use('mysql-store', dbConfig);
 module.exports = function recipes( options ) {

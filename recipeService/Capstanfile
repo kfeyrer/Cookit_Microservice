@@ -1,0 +1,5 @@
+base: cloudius/osv-node
+
+cmdline: --cwd=/ /libnode.so ./getRecipePinService.js 
+
+build: make
