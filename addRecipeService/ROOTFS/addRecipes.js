@@ -1,7 +1,6 @@
 var seneca = require('seneca')(),
     dbConfig = require('./conf/db_recipe'),
-    _ = require('lodash'),
-    convertRecipe = require('./utils/convertRecipe');
+    _ = require('lodash');
 
 seneca.use('mysql-store', dbConfig);
 module.exports = function addRecipes( options ) {
@@ -15,7 +14,7 @@ module.exports = function addRecipes( options ) {
             recipes.name = msg.recipe.name;
             recipes.ingredients = msg.recipe.ingredients;
             recipes.description = msg.recipe.description;
-            //add entry
+            //save entry in db
             recipes.save$(function (err, entity) {
                 if (err) {
                     console.error('ADD: ' + err);

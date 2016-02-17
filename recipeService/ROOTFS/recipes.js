@@ -37,10 +37,6 @@ module.exports = function recipes( options ) {
                         data: _.first(convertRecipe(entities)),
                         http$: {
                             status: 200
-                            //for setting the cookie on login
-                            //headers: {
-                            //    'Set-Cookie': 'bla=1234;path=/'
-                            //}
                         }});
                 }
             });

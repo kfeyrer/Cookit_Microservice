@@ -2,6 +2,8 @@ var seneca = require('seneca')(),
     _ = require('lodash'),
     expirationDate = require('./utils/expirationDate');
 
+//uses the user plugin of seneca
+// users  are only stored in the memory. If the service needs a restart the registered users are gone.
 seneca.use('user');
 seneca.client({role:'user',cmd:'*'});
 module.exports = function auth( options ) {
@@ -113,10 +115,7 @@ module.exports = function auth( options ) {
                     respond(null, {
                         data: {success: true},
                         http$: {
-                            status: 200,
-                            headers: {
-                                //'Set-Cookie': 'token=1234;path=/;expires=' + expirationDate(false)
-                            }
+                            status: 200
                         }
                     });
                 }

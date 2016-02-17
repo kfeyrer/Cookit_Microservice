@@ -1,6 +1,7 @@
 require( 'seneca' )()
 
+    //use file search
     .use( 'search' )
-    // listen for role:math messages
+    // listen for role:search messages
     // IMPORTANT: must match client
-    .listen( { type:'tcp', pin:'role:search', port:'4000' } )
+    .listen( { type:'tcp', pin:'role:search', port:'4000' } );

@@ -1,7 +1,21 @@
+/*
+    Api which calles the Microservice actions with the necessary parameters
+    Following API Endpoints:
+        /api/search?query={query}
+        /api/recipes/list
+        /api/recipes/detail
+        /api/addRecipes
+        /api/auth/login
+        /api/auth/registration
+        /api/auth/logout
+ */
 module.exports = function api( options ) {
+    //defines the allowed Microservice operation
     var valid_ops = { search:'search', list: 'list', detail: 'detail', login: 'login', registration: 'registration',logout: 'logout', add: 'add'};
 
+    //will be exposed via URL endpoint
     this.add( 'role:api,path:search', function( msg, respond ) {
+        // calls the Microservice with the parameters
         this.act( 'role:search', {
             cmd:   'search',
             query: msg.query
@@ -29,6 +43,8 @@ module.exports = function api( options ) {
         })
     });
 
+
+    // API Endpoints start with /api/
     this.add( 'init:api', function( msg, respond ) {
         this.act('role:web',{use:{
             prefix: '/api',
