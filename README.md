@@ -42,3 +42,6 @@ Go in one folder and run "capstan build".
 Now use <i>sudo {path to capstan} run -n bridge</i>
 Each service should now get an IP-Address. Change to this address in the server.js file and start the server.
 It should now be possible to call the Webservice without problems.
+
+If the capstan run throws an error, saying that it does not find the bridge-helper 
+at the specific path, copy the bridge-helper there. You probably have to install bridge-helper if it is not installed.
