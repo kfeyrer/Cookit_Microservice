@@ -62,7 +62,7 @@ module.exports = function api( options ) {
                     suffix:'/:operation'
                 },
                 addRecipes: {
-                    PUT: true,
+                    POST: true,
                     suffix:'/:operation'
                 }
             }
