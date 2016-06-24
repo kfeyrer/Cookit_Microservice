@@ -14,6 +14,7 @@ module.exports = function addRecipes( options ) {
             recipes.name = msg.recipe.name;
             recipes.ingredients = msg.recipe.ingredients;
             recipes.description = msg.recipe.description;
+            recipes.username = msg.recipe.username;
             //save entry in db
             recipes.save$(function (err, entity) {
                 if (err) {

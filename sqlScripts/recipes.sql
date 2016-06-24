@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `recipes` (
   `image` text COLLATE latin1_bin,
   `lat` varchar(100) COLLATE latin1_bin DEFAULT NULL,
   `lon` varchar(100) COLLATE latin1_bin DEFAULT NULL,
+  `username` mediumint(9) COLLATE latin1_bin NOT NULL,
   PRIMARY KEY(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
 
@@ -44,22 +45,22 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 -- Daten für Tabelle `recipes`
 --
 
-INSERT INTO `recipes` (`id`, `name`, `ingredients`, `description`, `image`, `lat`, `lon`) VALUES
-(1, 'Rezept1', '1 Ei,2g Zucker', 'Beschreibung', 'NULL', NULL, NULL),
-(2, 'RezeptApp1', '1 Ei', 'Beschreibung', 'logo.png', NULL, NULL),
-(3, 'RezeptApp2', '1 Ei', 'Beschreibung', 'logo.png', NULL, NULL),
-(6, 'RezeptAppwith loc', '1 Ei', 'Locationtest', 'logo.png', '48.2082647', '16.373920599999998'),
-(7, 'RezeptAppWS', '1 Ei', 'Rezept mit Websocket', 'logo.png', 'NULL', 'NULL'),
-(8, 'TestRezept', '1 Ei', 'Dies ist eine Testbeschreibung', 'logo.png', '47.4532761', '15.332007'),
-(9, 'Präsentations Rezept', '1 Ei,20dag Mehl', 'Das ist eine Beschreibung', 'logo.png', '47.453213899999994', '15.3320729'),
-(10, 'Rezept 120', '1 Ei,2 Eier', 'Test', 'logo.png', 'NULL', 'NULL'),
-(11, 'Rezept15', '1 Ei,2 Eier,3 Eier', 'Test', 'logo.png', 'NULL', 'NULL'),
-(12, 'Rezept Websocket Test', '1 Ei,2 Eier,3 Eier', 'Test', 'logo.png', 'NULL', 'NULL'),
-(13, 'Websocket 2', '1 EI', 'Test', 'logo.png', 'NULL', 'NULL'),
-(14, 'Websocket 3', '1 Ei', 'test', 'logo.png', 'NULL', 'NULL'),
-(15, 'Websocket 5', '1 EI', 'test', 'logo.png', 'NULL', 'NULL'),
-(16, 'Rezept Websocket 25', '1 Ei', 'Test', 'logo.png', 'NULL', 'NULL'),
-(17, 'Rezept 1', '1 Ei', 'Test', 'logo.png', 'NULL', 'NULL');
+INSERT INTO `recipes` (`id`, `name`, `ingredients`, `description`, `image`, `lat`, `lon`, `username`) VALUES
+(1, 'Rezept1', '1 Ei,2g Zucker', 'Beschreibung', 'NULL', NULL, NULL, 1),
+(2, 'RezeptApp1', '1 Ei', 'Beschreibung', 'logo.png', NULL, NULL, 2),
+(3, 'RezeptApp2', '1 Ei', 'Beschreibung', 'logo.png', NULL, NULL, 3),
+(6, 'RezeptAppwith loc', '1 Ei', 'Locationtest', 'logo.png', '48.2082647', '16.373920599999998', 1),
+(7, 'RezeptAppWS', '1 Ei', 'Rezept mit Websocket', 'logo.png', 'NULL', 'NULL', 2),
+(8, 'TestRezept', '1 Ei', 'Dies ist eine Testbeschreibung', 'logo.png', '47.4532761', '15.332007', 3),
+(9, 'Präsentations Rezept', '1 Ei,20dag Mehl', 'Das ist eine Beschreibung', 'logo.png', '47.453213899999994', '15.3320729', 1),
+(10, 'Rezept 120', '1 Ei,2 Eier', 'Test', 'logo.png', 'NULL', 'NULL', 3),
+(11, 'Rezept15', '1 Ei,2 Eier,3 Eier', 'Test', 'logo.png', 'NULL', 'NULL', 1),
+(12, 'Rezept Websocket Test', '1 Ei,2 Eier,3 Eier', 'Test', 'logo.png', 'NULL', 'NULL', 2),
+(13, 'Websocket 2', '1 EI', 'Test', 'logo.png', 'NULL', 'NULL', 2),
+(14, 'Websocket 3', '1 Ei', 'test', 'logo.png', 'NULL', 'NULL', 3),
+(15, 'Websocket 5', '1 EI', 'test', 'logo.png', 'NULL', 'NULL', 2),
+(16, 'Rezept Websocket 25', '1 Ei', 'Test', 'logo.png', 'NULL', 'NULL', 1),
+(17, 'Rezept 1', '1 Ei', 'Test', 'logo.png', 'NULL', 'NULL', 1);
 
 --
 -- Indizes der exportierten Tabellen

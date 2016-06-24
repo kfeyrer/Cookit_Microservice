@@ -6,7 +6,8 @@ module.exports = function convertRecipe( entities ) {
             id: entity.id,
             name: entity.name,
             ingredients: entity.ingredients,
-            description: entity.description
+            description: entity.description,
+            username: entity.username
         };
     });
 };

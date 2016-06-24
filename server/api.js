@@ -26,7 +26,21 @@ module.exports = function api( options ) {
         this.act( 'role:recipes', {
             cmd:   valid_ops[msg.operation],
             recipe: msg.recipe || null
-        }, respond )
+        }, function(err, data) {
+            if (msg.operation !== 'detail') {
+                respond(err, data);
+                return;
+            }
+
+            this.act( 'role:user', {
+                cmd: 'getUser',
+                usernameId: data.data.username
+            }, function(err, username) {
+                data.data.username = username.data;
+                respond(err, data);
+            })
+
+        } )
     });
     this.add( 'role:api,path:auth', function( msg, respond ) {
         this.act( 'role:auth', {

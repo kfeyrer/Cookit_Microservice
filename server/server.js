@@ -9,7 +9,8 @@ seneca.use( 'api' ) //loads the api file
     .client( { type:'tcp', pin:'role:search', port: '4000' } ) //send any role:search action to the Microservice
     .client( { type:'tcp', pin: 'role:recipes', port: '4001' }) //send any role:recipes action to the Microservice
     .client( { type:'tcp', pin: 'role:auth', port: '4002' }) //send any role:auth action to the Microservice
-    .client( { type:'tcp', pin: 'role:addRecipes', port: '4003' }); //send any role:addRecipes action to the Microservice
+    .client( { type:'tcp', pin: 'role:addRecipes', port: '4003' }) //send any role:addRecipes action to the Microservice
+    .client( { type:'tcp', pin: 'role:user', port: '4004' }); //send any role:addRecipes action to the Microservice
 
 app.use( require('body-parser').json())
     .use( seneca.export( 'web' ) ) //integration between seneca and express
