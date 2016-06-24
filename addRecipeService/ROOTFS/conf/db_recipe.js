@@ -2,8 +2,8 @@
 
 module.exports = {
     name:'cookit',
-    host:'localhost',
-    user:'root',
-    password:'M22092013k',
-    port:9249
+    host:'10.0.0.21',
+    user:'student',
+    password:'myPass',
+    port:3306
 }

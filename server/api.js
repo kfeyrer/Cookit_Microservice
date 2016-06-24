@@ -4,7 +4,7 @@
         /api/search?query={query}
         /api/recipes/list
         /api/recipes/detail
-        /api/addRecipes
+        /api/addRecipes/add
         /api/auth/login
         /api/auth/registration
         /api/auth/logout
@@ -49,12 +49,12 @@ module.exports = function api( options ) {
             recipe: msg.req$.body
         }, respond )
     });
-    this.add('rolse:api,path:addRecipes', function( msg, respond) {
+    this.add('role:api,path:addRecipes', function( msg, respond ) {
         this.act( 'role:addRecipes', {
             cmd: valid_ops[msg.operation],
             header: msg.req$.headers,
-            body: msg.req$.body
-        })
+            recipe: msg.req$.body
+        }, respond )
     });
 
 
@@ -76,13 +76,12 @@ module.exports = function api( options ) {
                     suffix:'/:operation'
                 },
                 addRecipes: {
-                    PUT: true,
+                    POST: true,
                     suffix:'/:operation'
                 }
             }
         }});
-
         respond()
-    })
+    });
 
 };
